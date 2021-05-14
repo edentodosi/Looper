@@ -40,7 +40,7 @@ class MusicButton {
         } else {
             this.shouldPlay = true;
             this.htmlElement.style.backgroundColor = "#82c8a0";
-
+            //if any music is playing, calculate the time left until next loop and add this pad to the next cycle. 
             if (isAnyMusicPLaying) {
                 this.futurePlay = setTimeout(() => { this.playButton() }, getNextLoopCycleInMiliSec())
             }
@@ -71,6 +71,7 @@ class MusicButton {
         }
     }
 }
+
 function checkIfPress() {
     var checkBox = document.getElementById("playStop");
     if (checkBox.checked == true) {
@@ -79,6 +80,7 @@ function checkIfPress() {
         stopPress();
     }
 }
+
 document.addEventListener('DOMContentLoaded', onLoad);
 function onLoad() {
     for (i = 0; i < 9; i++) {
@@ -95,13 +97,14 @@ function onButtonPress(buttonId) {
         isSomeonePlays = isSomeonePlays || buttons[i].isPlaying;
     }
 
-    // if play was pressed, but all buttons were stopped manually, the next loop starts now 
+    // if play was pressed but all buttons stopped manually, the next loop starts now 
     if (!isSomeonePlays && isAnyMusicPLaying) {
         playPress();
     }
 }
 
 function stopPress() {
+    document.getElementById("state").innerHTML = "Press to play";
     isAnyMusicPLaying = false;
     for (i = 0; i < buttons.length; i++) {
         buttons[i].stopButton();
@@ -109,6 +112,7 @@ function stopPress() {
 }
 
 function playPress() {
+    document.getElementById("state").innerHTML = "Press to stop";
     isAnyMusicPLaying = true;
     for (i = 0; i < buttons.length; i++) {
         if (buttons[i].shouldPlay) {
